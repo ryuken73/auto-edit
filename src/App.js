@@ -1,6 +1,10 @@
 import './App.css';
 import React from 'react';
+import Box from '@mui/material/Box'
 import Button from '@mui/material/Button'
+import Stack from '@mui/material/Stack'
+import AppleIcon from '@mui/icons-material/Apple';
+import AndroidIcon from '@mui/icons-material/Android';
 import styled from 'styled-components';
 import useMediaQueryEasy from 'hooks/useMediaQueryEasy';
 
@@ -23,12 +27,19 @@ const Container = styled.div`
 `
 const Title = styled.div`
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
   justify-content: center;
+  align-items: center;
   color: white;
   opacity: 0.5;
   font-size: 2em;
   flex:1;
+  -webkit-touch-callout: none; /* iOS Safari */
+  -webkit-user-select: none; /* Safari */
+  -khtml-user-select: none; /* Konqueror HTML */
+  -moz-user-select: none; /* Old versions of Firefox */
+  -ms-user-select: none; /* Internet Explorer/Edge */
+  u
 `
 const Body = styled.div`
   min-width: 80%;
@@ -37,6 +48,11 @@ const Body = styled.div`
   grid-template-columns: ${props => props.isLandscape ? "1fr 1fr" : "none"};
   grid-template-rows: ${props => props.isLandscape ? "none" : "1fr 1fr"};
   place-items: center center;
+`
+const CustomStack = styled(Stack)`
+  width: 70%;
+  height: 70%;
+
 `
 const FullHeightButton = styled(Button)`
   && {
@@ -55,10 +71,13 @@ const FullHeightButton = styled(Button)`
     }
     span {
         margin-right: 3px;
+        svg {
+          font-size: 80px;
+        }
     }
   }
-  width: 80%;
-  height: 70%;
+  width: 100%;
+  height: 100%;
 `
 const Footer = styled.div`
   margin-top: auto;
@@ -66,6 +85,12 @@ const Footer = styled.div`
   font-size: 1em;
   opacity: 0.5;
   color: white;
+  -webkit-touch-callout: none; /* iOS Safari */
+  -webkit-user-select: none; /* Safari */
+  -khtml-user-select: none; /* Konqueror HTML */
+  -moz-user-select: none; /* Old versions of Firefox */
+  -ms-user-select: none; /* Internet Explorer/Edge */
+  user-select: none;
 `
 const setScreenOrientation = e => {
   console.log(e)
@@ -73,22 +98,35 @@ const setScreenOrientation = e => {
 
 function App() {
   const [vh, setvh] = React.useState('0.01');
-  const {isLandscape} = useMediaQueryEasy();
+  const {isLandscape, isPortrait} = useMediaQueryEasy();
   React.useLayoutEffect(() => {
     setvh(window.innerHeight)
-  },[isLandscape])
+  },[isLandscape, isPortrait])
   return (
     <Container vh={vh}>
-      <Title>Auto-Edit (편집비서)</Title>
+      <Title>
+        <div>
+          Auto-Edit
+        </div>
+        <Box sx={{fontSize:'18px', ml:"5px"}}>
+          (편집비서)
+        </Box>
+      </Title>
       <Body isLandscape={isLandscape}>
-        <FullHeightButton 
-          variant="contained"
-        >ANDROID</FullHeightButton>
-        <FullHeightButton 
-          variant="contained"
-          background="#313599"
-          hoverBackground="#313599"
-        >IOS</FullHeightButton>
+        <CustomStack spacing={2}>
+          <FullHeightButton 
+            variant="contained"
+            startIcon={<AndroidIcon sx={{fontSize:"100px"}} />}
+          >ANDROID</FullHeightButton>
+        </CustomStack>
+        <CustomStack direction="row" spacing={2}>
+          <FullHeightButton 
+            variant="contained"
+            background="#313599"
+            hoverBackground="#313599"
+            startIcon={<AppleIcon />}
+          >IOS</FullHeightButton>
+        </CustomStack>
       </Body>
       <Footer>
         Copyright@ 2022 SBS. All Rights Reserved
