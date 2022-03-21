@@ -1,8 +1,8 @@
 import './App.css';
 import React from 'react';
 import Button from '@mui/material/Button'
-import Box from '@mui/material/Box'
 import styled from 'styled-components';
+import useMediaQueryEasy from 'hooks/useMediaQueryEasy';
 
 const Container = styled.div`
   background: darkslategrey;
@@ -31,20 +31,34 @@ const Title = styled.div`
   flex:1;
 `
 const Body = styled.div`
-  flex:4;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-`
-const ButtonContainer=styled.div`
-  flex:1;
+  min-width: 80%;
+  flex: 4;
+  display: grid;
+  grid-template-columns: ${props => props.isLandscape ? "1fr 1fr" : "none"};
+  grid-template-rows: ${props => props.isLandscape ? "none" : "1fr 1fr"};
+  place-items: center center;
 `
 const FullHeightButton = styled(Button)`
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
+  && {
+    background: maroon;
+    color: white;
+    font-size: ${props => props.fontSize || '15px'};
+    background: ${props => props.background || 'marron'};
+    opacity: 0.8;
+    border-radius: 10px;
+    border: ${props => props.border || 'none'}; 
+    padding: 1px 5px 1px 5px;
+    &:hover {
+        background:${props => props.hoverBackground || 'maroon'};
+        border: ${props => props.hoverBorder || 'none'};
+
+    }
+    span {
+        margin-right: 3px;
+    }
+  }
+  width: 80%;
+  height: 70%;
 `
 const Footer = styled.div`
   margin-top: auto;
@@ -59,19 +73,22 @@ const setScreenOrientation = e => {
 
 function App() {
   const [vh, setvh] = React.useState('0.01');
+  const {isLandscape} = useMediaQueryEasy();
   React.useLayoutEffect(() => {
     setvh(window.innerHeight)
-  },[])
+  },[isLandscape])
   return (
     <Container vh={vh}>
       <Title>Auto-Edit (편집비서)</Title>
-      <Body>
-        <ButtonContainer>
-          <FullHeightButton variant="contained">ANDROID</FullHeightButton>
-        </ButtonContainer>
-        <ButtonContainer>
-          <FullHeightButton variant="contained">IOS</FullHeightButton>
-        </ButtonContainer>
+      <Body isLandscape={isLandscape}>
+        <FullHeightButton 
+          variant="contained"
+        >ANDROID</FullHeightButton>
+        <FullHeightButton 
+          variant="contained"
+          background="#313599"
+          hoverBackground="#313599"
+        >IOS</FullHeightButton>
       </Body>
       <Footer>
         Copyright@ 2022 SBS. All Rights Reserved
