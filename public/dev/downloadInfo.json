@@ -1,0 +1,16 @@
+{
+        "android" : {
+                "auto-edit" : {
+                        "version" : "1.0",
+                        "path": "/download/android",
+                        "filename" : "auto-edit.apk"
+                }
+        },
+        "ios" : {
+                "auto-edit" : {
+                        "version" : "1.0",
+                        "path": "/download/ios",
+                        "filename" : "auto-edit.plist"
+                }
+        }
+}
