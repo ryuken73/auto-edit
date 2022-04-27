@@ -110,7 +110,7 @@ function MainPage() {
     console.log(event)
     const {id} = event.currentTarget;
     const prefix = DOWNLOAD_LINK_PREFIX[id];
-    const response = await fetch(pathResolver(DOWNLOAD_JSON_PATH));
+    const response = await fetch(pathResolver(DOWNLOAD_JSON_PATH)+`?v=${Date.now()}`);
     const obj = await response.json();
     console.log(obj, id)
     const {path, filename} = obj[id][AUTO_EDIT_APP_NAME];
